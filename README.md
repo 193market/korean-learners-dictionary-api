@@ -2,7 +2,7 @@
 
 Korean dictionary for learners: 56K words, 590K examples, translations in 11 languages.
 
-**Try it (free tier, no card):** [https://rapidapi.com/193market/api/korean-learners-dictionary](https://rapidapi.com/193market/api/korean-learners-dictionary) · also on [api.market](https://api.market/store/193market/korean-learners-dictionary)
+**Try it (free tier for evaluation):** [https://rapidapi.com/193market/api/korean-learners-dictionary](https://rapidapi.com/193market/api/korean-learners-dictionary) · also on [api.market](https://api.market/store/193market/korean-learners-dictionary)
 
 56,000+ Korean headwords (words, idioms, proverbs) with Korean definitions, 590K+ example sentences, and translations in 11 languages (en, zh, ja, fr, es, ar, mn, vi, th, id, ru). Search in Korean or in any of the 11 languages. Levels: beginner / intermediate / advanced. Hanja origin included. Data © National Institute of Korean Language (2026-08 release), CC BY-SA 2.0 KR.
 
@@ -139,7 +139,7 @@ The full OpenAPI 3 specification is in [`openapi.json`](openapi.json).
 | Plan | Price | Included per month |
 |---|---|---|
 | BASIC | free | a small monthly quota for evaluation |
-| PRO / ULTRA / MEGA | from $49 / month | 1,000+ requests, per-request overage, higher rate limits |
+| PRO / ULTRA / MEGA | from $9.99 / month | larger monthly quotas, per-request overage, higher rate limits |
 
 Current prices are always on the [RapidAPI pricing page](https://rapidapi.com/193market/api/korean-learners-dictionary/pricing). Error responses (4xx/5xx) are not charged on api.market.
 
