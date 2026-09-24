@@ -1,0 +1,336 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Korean Learner's Dictionary API",
+    "description": "56,000+ Korean headwords (words, idioms, proverbs) with Korean definitions, 590K+ example sentences, and translations in 11 languages (en, zh, ja, fr, es, ar, mn, vi, th, id, ru). Search in Korean or in any of the 11 languages. Levels: beginner / intermediate / advanced. Hanja origin included. Data © National Institute of Korean Language (2026-08 release), CC BY-SA 2.0 KR.",
+    "version": "0.2.0"
+  },
+  "paths": {
+    "/v1/search": {
+      "get": {
+        "summary": "Search words (Korean or any of 11 languages)",
+        "description": "Search by Korean headword or by a word in any of the 11 translation languages. Exact matches and basic words come first. Filter by level and part of speech; paginate with page and per_page.",
+        "operationId": "Search words",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "description": "Korean word or a word in any supported language, e.g. 사랑, love, 学校",
+              "examples": [
+                "love"
+              ],
+              "title": "Q"
+            },
+            "description": "Korean word or a word in any supported language, e.g. 사랑, love, 学校"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Only return translations in this language: en (English), zh (Chinese), ja (Japanese), fr (French), es (Spanish), ar (Arabic), mn (Mongolian), vi (Vietnamese), th (Thai), id (Indonesian), ru (Russian). Omit for all 11.",
+              "title": "Lang",
+              "type": "string"
+            },
+            "description": "Only return translations in this language: en (English), zh (Chinese), ja (Japanese), fr (French), es (Spanish), ar (Arabic), mn (Mongolian), vi (Vietnamese), th (Thai), id (Indonesian), ru (Russian). Omit for all 11."
+          },
+          {
+            "name": "level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Learner level: beginner, intermediate or advanced",
+              "title": "Level",
+              "type": "string"
+            },
+            "description": "Learner level: beginner, intermediate or advanced"
+          },
+          {
+            "name": "pos",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Filter by part of speech: noun, verb, adjective, adverb, pronoun, numeral, determiner, interjection, particle, ending, affix, bound noun, auxiliary verb, auxiliary adjective",
+              "title": "Pos",
+              "type": "string"
+            },
+            "description": "Filter by part of speech: noun, verb, adjective, adverb, pronoun, numeral, determiner, interjection, particle, ending, affix, bound noun, auxiliary verb, auxiliary adjective"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 10,
+              "title": "Per Page"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/words/{word_id}": {
+      "get": {
+        "summary": "Get one entry by id",
+        "description": "Full entry (senses, definitions, translations, up to 10 examples per sense) for an id returned by Search words.",
+        "operationId": "Get word by id",
+        "parameters": [
+          {
+            "name": "word_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "Entry id from Search words, e.g. 34525 (사랑)",
+              "examples": [
+                34525
+              ],
+              "title": "Word Id"
+            },
+            "description": "Entry id from Search words, e.g. 34525 (사랑)"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Only return translations in this language: en (English), zh (Chinese), ja (Japanese), fr (French), es (Spanish), ar (Arabic), mn (Mongolian), vi (Vietnamese), th (Thai), id (Indonesian), ru (Russian). Omit for all 11.",
+              "title": "Lang",
+              "type": "string"
+            },
+            "description": "Only return translations in this language: en (English), zh (Chinese), ja (Japanese), fr (French), es (Spanish), ar (Arabic), mn (Mongolian), vi (Vietnamese), th (Thai), id (Indonesian), ru (Russian). Omit for all 11."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/random": {
+      "get": {
+        "summary": "Random word (optionally by level)",
+        "description": "One random single-word entry, optionally limited to a learner level.",
+        "operationId": "Random word",
+        "parameters": [
+          {
+            "name": "level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Learner level: beginner, intermediate or advanced",
+              "title": "Level",
+              "type": "string"
+            },
+            "description": "Learner level: beginner, intermediate or advanced"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Only return translations in this language: en (English), zh (Chinese), ja (Japanese), fr (French), es (Spanish), ar (Arabic), mn (Mongolian), vi (Vietnamese), th (Thai), id (Indonesian), ru (Russian). Omit for all 11.",
+              "title": "Lang",
+              "type": "string"
+            },
+            "description": "Only return translations in this language: en (English), zh (Chinese), ja (Japanese), fr (French), es (Spanish), ar (Arabic), mn (Mongolian), vi (Vietnamese), th (Thai), id (Indonesian), ru (Russian). Omit for all 11."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/word-of-the-day": {
+      "get": {
+        "summary": "Same daily word for everyone (beginner/intermediate)",
+        "description": "A beginner or intermediate word that stays the same for all callers during a UTC day.",
+        "operationId": "Word of the day",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Only return translations in this language: en (English), zh (Chinese), ja (Japanese), fr (French), es (Spanish), ar (Arabic), mn (Mongolian), vi (Vietnamese), th (Thai), id (Indonesian), ru (Russian). Omit for all 11.",
+              "title": "Lang",
+              "type": "string"
+            },
+            "description": "Only return translations in this language: en (English), zh (Chinese), ja (Japanese), fr (French), es (Spanish), ar (Arabic), mn (Mongolian), vi (Vietnamese), th (Thai), id (Indonesian), ru (Russian). Omit for all 11."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/stats": {
+      "get": {
+        "summary": "Dataset statistics",
+        "description": "Counts of entries, senses, examples and translations, plus the data release.",
+        "operationId": "Dataset stats",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://korean-learners-dictionary.p.rapidapi.com",
+      "description": "RapidAPI gateway"
+    }
+  ]
+}
